@@ -1,7 +1,33 @@
-[gd_scene load_steps=13 format=3 uid="uid://edm6nmqory0u"]
+[gd_scene load_steps=23 format=3 uid="uid://edm6nmqory0u"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kraov"]
 [ext_resource type="Texture2D" uid="uid://c4nvpxwrsuysx" path="res://assets/Graveyard [16x16]/Bonus Character/Ghost_Idle.png" id="2_2j4nn"]
+[ext_resource type="PackedScene" uid="uid://dhuaipyy5p7wb" path="res://scenes/projectile.tscn" id="2_auvf0"]
+[ext_resource type="Texture2D" uid="uid://cdsf7gpij5fmr" path="res://assets/Graveyard [16x16]/Bonus Character/Ghost_Death.png" id="3_ytbu5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p28x7"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ly2u"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4m4h"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6lcl"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r480l"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqo34"]
+atlas = ExtResource("3_ytbu5")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8008d"]
 atlas = ExtResource("2_2j4nn")
@@ -39,6 +65,29 @@ region = Rect2(336, 0, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_p28x7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ly2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4m4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6lcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r480l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqo34")
+}],
+"loop": false,
+"name": &"death",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8008d")
 }, {
 "duration": 1.0,
@@ -70,23 +119,37 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_h8ags"]
 radius = 6.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfg22"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u01od"]
+bg_color = Color(0.418562, 0.657669, 0.266315, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing_size = 0.01
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 5
-collision_layer = 2
+collision_layer = 10
 collision_mask = 2
 motion_mode = 1
 floor_snap_length = 0.0
 platform_floor_layers = 4294901760
 script = ExtResource("1_kraov")
+projectile = ExtResource("2_auvf0")
 
-[node name="idle" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -12)
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8ny0w")
 autoplay = "default"
-frame_progress = 0.968142
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -12)
 shape = SubResource("CircleShape2D_h8ags")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -94,7 +157,28 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="color_bounding" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -12)
 shape = SubResource("CircleShape2D_h8ags")
 
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="HealthTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -13.0
+offset_top = -18.0
+offset_right = 13.0
+offset_bottom = -14.0
+theme_override_styles/background = SubResource("StyleBoxFlat_mfg22")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u01od")
+step = 1.0
+value = 100.0
+rounded = true
+show_percentage = false
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="HealthTimer" to="." method="_on_health_timer_timeout"]

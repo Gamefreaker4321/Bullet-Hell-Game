@@ -1,23 +1,72 @@
 extends CharacterBody2D
 
-var speed = 150  # speed in pixels/sec
-@onready var tile_map := $"../TileMap"
+class_name Player
 
+const COOLDOWN = 10
+const IFRAMES = 10
+
+var speed = 150  # speed in pixels/sec
+var health = 100
+var iframes = 0
+var timer = 0
+var last_direction = Vector2.RIGHT
+	
+@onready var tile_map = $"../TileMap"
+@onready var death_timer = $DeathTimer
+@onready var sprite = $PlayerSprite
+@onready var health_bar = $HealthBar
+@onready var health_timer = $HealthTimer
+@export var projectile : PackedScene
+
+func _ready():
+	health_bar.visible = false
+	
 func _physics_process(_delta):
+	if iframes < IFRAMES:
+		iframes += 1
+	if timer > 0:
+		timer -= 1
 	var direction = Input.get_vector("left", "right", "up", "down")
 	velocity = direction * speed
-	move_and_slide()
+	if velocity.x > 0:
+		sprite.flip_h = false
+	if velocity.x < 0:
+		sprite.flip_h = true
+	if death_timer.is_stopped():
+		move_and_slide()
+		if direction != Vector2.ZERO:
+			last_direction = direction
+		if Input.is_action_pressed("fire") && timer == 0:
+			timer = COOLDOWN 
+			shoot(last_direction)
+	
+func shoot(direction):
+	var inst = projectile.instantiate()
+	inst.position = global_position
+	inst.look_at(global_position + direction)
+	var left = inst.duplicate()
+	left.rotate(0.26)
+	var right = inst.duplicate()
+	right.rotate(-0.26)
+	add_sibling(left)
+	add_sibling(inst)
+	add_sibling(right)
 
-func _on_area_2d_body_entered(body):
-	print("im here") # Replace with function body.
-	var tile_map_layer = 0 
-	var tile_map_cell_position = Vector2i(1,-1) 
-	var tile_data = tile_map.get_cell_tile_data(tile_map_layer, tile_map_cell_position)
-	if tile_data: 
-		var tile_map_cell_source_id = tile_map.get_cell_source_id(tile_map_layer, tile_map_cell_position); 
-		var tile_map_cell_atlas_coords = tile_map.get_cell_atlas_coords(tile_map_layer, tile_map_cell_position) 
-		var tile_map_cell_alternative = tile_map.get_cell_alternative_tile(tile_map_layer, tile_map_cell_position) 
-		var new_tile_map_cell_position = tile_map_cell_position + Vector2i.RIGHT 
-		tile_map.set_cell(tile_map_layer, new_tile_map_cell_position, tile_map_cell_source_id, tile_map_cell_atlas_coords, tile_map_cell_alternative)
+func hit(damage):
+	if iframes >= IFRAMES:
+		iframes = 0
+		health -= damage
+		health_bar.value = health
+		health_bar.visible = true
+		health_timer.start()
+		if health <= 0 && death_timer.is_stopped():
+			sprite.animation = "death" 
+			death_timer.start()
+			print("dying")
+
+func _on_death_timer_timeout():
+	get_tree().reload_current_scene() # Replace with function body.
 
 
+func _on_health_timer_timeout():
+	health_bar.visible = false

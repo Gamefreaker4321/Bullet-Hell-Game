@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://bfbif6ecf2jkh"]
+
+[ext_resource type="Script" path="res://scripts/path_enemy.gd" id="1_7kgot"]
+[ext_resource type="Texture2D" uid="uid://o8drcuhmn8dj" path="res://assets/sprites/All-In-One/Characters/Bat/Vampire/BatVampire_Flying.png" id="1_icl8k"]
+[ext_resource type="Script" path="res://scripts/path_enemy_body.gd" id="2_fa1bj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx4wp"]
+atlas = ExtResource("1_icl8k")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpquf"]
+atlas = ExtResource("1_icl8k")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8t6n"]
+atlas = ExtResource("1_icl8k")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nawk2"]
+atlas = ExtResource("1_icl8k")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_em7tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kx4wp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpquf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8t6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nawk2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0shdt"]
+radius = 9.0
+
+[node name="path_enemy" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_7kgot")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("2_fa1bj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_em7tw")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_0shdt")

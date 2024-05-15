@@ -1,7 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dbusu2l4remg4"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8vnhh"]
 [ext_resource type="PackedScene" uid="uid://cf5qo34wp800r" path="res://scenes/enemy.tscn" id="2_gwxqo"]
+[ext_resource type="Script" path="res://scripts/follow_enemy.gd" id="2_k7e2c"]
 
 [node name="follow_enemy" instance=ExtResource("2_gwxqo")]
-script = ExtResource("1_8vnhh")
+script = ExtResource("2_k7e2c")
+
+[node name="Sprite2D" parent="." index="0"]
+autoplay = "pumpkin"
+frame_progress = 0.247941
