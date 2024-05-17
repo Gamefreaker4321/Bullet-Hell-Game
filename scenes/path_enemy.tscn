@@ -1,8 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfbif6ecf2jkh"]
+[gd_scene load_steps=11 format=3 uid="uid://bfbif6ecf2jkh"]
 
 [ext_resource type="Script" path="res://scripts/path_enemy.gd" id="1_7kgot"]
 [ext_resource type="Texture2D" uid="uid://o8drcuhmn8dj" path="res://assets/sprites/All-In-One/Characters/Bat/Vampire/BatVampire_Flying.png" id="1_icl8k"]
 [ext_resource type="Script" path="res://scripts/path_enemy_body.gd" id="2_fa1bj"]
+
+[sub_resource type="Curve2D" id="Curve2D_hvwq4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -29.6416, 0, 29.6416, 0, 42, 50, -20.8122, 0.185223, 20.8122, -0.185223, 81, 1, -25.0167, -0.420448, 25.0167, 0.420448, 120, 48, -22.0735, -0.420448, 22.0735, 0.420448, 161, 0, -20.3917, -0.210224, 20.3917, 0.210224, 207, 53, -24.6769, 0.0875025, 24.6769, -0.0875025, 247, 1, -31.1132, 0.630672, 31.1132, -0.630672, 287, 50)
+}
+point_count = 8
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kx4wp"]
 atlas = ExtResource("1_icl8k")
@@ -43,17 +49,27 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_0shdt"]
 radius = 9.0
 
-[node name="path_enemy" type="PathFollow2D"]
+[node name="path_enemy" type="Path2D" groups=["Enemy"]]
+curve = SubResource("Curve2D_hvwq4")
+
+[node name="Path2D" type="PathFollow2D" parent="."]
 rotates = false
+cubic_interp = false
 loop = false
 script = ExtResource("1_7kgot")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Path2D"]
 script = ExtResource("2_fa1bj")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_em7tw")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/CharacterBody2D"]
 shape = SubResource("CircleShape2D_0shdt")
+
+[node name="Timer" type="Timer" parent="Path2D/CharacterBody2D"]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Path2D/CharacterBody2D/Timer" to="Path2D/CharacterBody2D" method="_on_timer_timeout"]

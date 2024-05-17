@@ -2,9 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://diqoyuxof3l2y" path="res://assets/Graveyard [16x16]/Tiles/Back_Tiles.png" id="1_ehai5"]
 [ext_resource type="PackedScene" uid="uid://edm6nmqory0u" path="res://scenes/player.tscn" id="1_fetmv"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_fh3mm"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_miwdl"]
 [ext_resource type="PackedScene" uid="uid://cg21j00uc5snu" path="res://scenes/enemy_spawner.tscn" id="3_47it5"]
-[ext_resource type="PackedScene" uid="uid://bfbif6ecf2jkh" path="res://scenes/path_enemy.tscn" id="10_1qyal"]
+[ext_resource type="PackedScene" uid="uid://n8axcln7ig0r" path="res://scenes/pause_menu.tscn" id="5_mq50j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n6avj"]
 texture = ExtResource("1_ehai5")
@@ -202,13 +203,8 @@ physics_layer_0/collision_layer = 6
 physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_n6avj")
 
-[sub_resource type="Curve2D" id="Curve2D_l8c8p"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -143, -65, -29.6416, 0, 29.6416, 0, -106, -26, -20.8122, 0.630672, 20.8122, -0.630672, -59, -67, -25.0167, -0.420448, 25.0167, 0.420448, -7, -24, -22.0735, -0.420448, 22.0735, 0.420448, 36, -64, -20.3917, -0.210224, 20.3917, 0.210224, 81, -22, -34.4768, -1.47157, 34.4768, 1.47157, 129, -63, -31.1132, 0.630672, 31.1132, -0.630672, 168, -20)
-}
-point_count = 8
-
 [node name="Game" type="Node2D"]
+script = ExtResource("1_fh3mm")
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("1_miwdl")
@@ -221,16 +217,27 @@ layer_0/tile_data = PackedInt32Array(-589842, 327680, 1, -851986, 65536, 1, -786
 [node name="Player" parent="." instance=ExtResource("1_fetmv")]
 position = Vector2(0, 1)
 
-[node name="Enemy_Spawner" parent="." instance=ExtResource("3_47it5")]
-position = Vector2(-1, -217)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 
-[node name="Path2D" type="Path2D" parent="."]
-position = Vector2(-1, 0)
-curve = SubResource("Curve2D_l8c8p")
+[node name="Enemy_Spawner_Top" parent="." instance=ExtResource("3_47it5")]
+position = Vector2(0, -230)
 
-[node name="path_enemy" parent="Path2D" instance=ExtResource("10_1qyal")]
-position = Vector2(-143, -65)
-rotation = 0.921396
+[node name="Enemy_Spawner_Bottom" parent="." instance=ExtResource("3_47it5")]
+position = Vector2(0, 240)
+
+[node name="Enemy_Spawner_Left" parent="." instance=ExtResource("3_47it5")]
+position = Vector2(-376, 0)
+
+[node name="Enemy_Spawner_Right" parent="." instance=ExtResource("3_47it5")]
+position = Vector2(386, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="Pause_Menu" parent="." instance=ExtResource("5_mq50j")]
+visible = false
+z_index = 100
+
+[connection signal="timeout" from="Timer" to="GameManager" method="_on_timer_timeout"]

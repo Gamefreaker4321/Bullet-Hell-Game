@@ -1,7 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://cf5qo34wp800r"]
+[gd_scene load_steps=26 format=3 uid="uid://cf5qo34wp800r"]
 
 [ext_resource type="Texture2D" uid="uid://bjpdd57lo7ur7" path="res://assets/sprites/All-In-One/Characters/Pumpkinhead Animations Pixel Art 2D/Standard/Pumpkinhead_Walk_strip6.png" id="1_b5fa1"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_j2kfw"]
 [ext_resource type="Texture2D" uid="uid://ce1ljhb6me4w0" path="res://assets/sprites/All-In-One/Characters/Skeleton/NormalSkeleton/White/NormalSkeletonWhite_Walk.png" id="2_0oykg"]
 [ext_resource type="Texture2D" uid="uid://dkykpecgdh8i4" path="res://assets/sprites/All-In-One/Characters/Werewolf/Gray Hair/1/WerewolfGrayHair_Run.png" id="3_7u7gl"]
 
@@ -167,10 +166,9 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 collision_mask = 9
 motion_mode = 1
-script = ExtResource("1_j2kfw")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
 scale = Vector2(1, 0.98)

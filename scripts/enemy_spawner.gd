@@ -1,10 +1,23 @@
 extends Node2D
 
-
-var enemy_scene = preload("res://scenes/follow_enemy.tscn")
-
-func _on_timer_timeout():
-	for n in 5:
-		var enemy = enemy_scene.instantiate()
-		enemy.position = Vector2(randi_range(-144,144), position.y)
+func spawn(count: int, type: String, randx: int, randy:int):
+	var spread_x
+	var spread_y
+	if randx != 0:
+		spread_x = range(-randx, randx, 2*randx/(count+1))
+	if randy != 0:
+		spread_y = range(-randy, randy, 2*randy/(count+1))
+	for n in count:
+		var enemy = Enemy.new_enemy(type, 100, 10)
+		var x
+		var y
+		if randx == 0:
+			x = 0
+		else:
+			x = randf_range(spread_x[n],spread_x[n+1])
+		if randy == 0:
+			y = 0
+		else:
+			y = randf_range(spread_y[n],spread_y[n+1])
+		enemy.position = position + Vector2(x,y)
 		add_sibling(enemy)

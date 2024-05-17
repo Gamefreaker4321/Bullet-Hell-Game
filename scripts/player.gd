@@ -2,8 +2,14 @@ extends CharacterBody2D
 
 class_name Player
 
-const COOLDOWN = 10
+const COOLDOWN = 14
 const IFRAMES = 10
+
+var shotgun = true
+var turbo = true
+var speed_boost = true
+var penetrate = true
+var power_shot = false
 
 var speed = 150  # speed in pixels/sec
 var health = 100
@@ -18,6 +24,7 @@ var last_direction = Vector2.RIGHT
 @onready var health_timer = $HealthTimer
 @export var projectile : PackedScene
 
+
 func _ready():
 	health_bar.visible = false
 	
@@ -27,7 +34,10 @@ func _physics_process(_delta):
 	if timer > 0:
 		timer -= 1
 	var direction = Input.get_vector("left", "right", "up", "down")
-	velocity = direction * speed
+	if speed_boost:
+		velocity = direction * speed * 2
+	else:
+		velocity = direction * speed
 	if velocity.x > 0:
 		sprite.flip_h = false
 	if velocity.x < 0:
@@ -37,20 +47,46 @@ func _physics_process(_delta):
 		if direction != Vector2.ZERO:
 			last_direction = direction
 		if Input.is_action_pressed("fire") && timer == 0:
-			timer = COOLDOWN 
+			if turbo:
+				timer = COOLDOWN/2
+			else:
+				timer = COOLDOWN  
 			shoot(last_direction)
 	
 func shoot(direction):
 	var inst = projectile.instantiate()
 	inst.position = global_position
 	inst.look_at(global_position + direction)
-	var left = inst.duplicate()
-	left.rotate(0.26)
-	var right = inst.duplicate()
-	right.rotate(-0.26)
-	add_sibling(left)
+	if speed_boost:
+		inst.speed *= 2
+	if penetrate:
+		inst.penetrate = 2
+		inst.id = 3
+	if power_shot:
+		inst.damage *= 2
+		inst.id = 4
 	add_sibling(inst)
-	add_sibling(right)
+	if shotgun:
+		# add 15% spread
+		var left = inst.duplicate()
+		left.rotate(0.26)
+		var right = inst.duplicate()
+		right.rotate(-0.26)
+		if speed_boost:
+			left.speed *= 2
+			right.speed *= 2
+		if penetrate:
+			left.penetrate = 2
+			right.penetrate = 2
+			left.id = 3
+			right.id = 3
+		if power_shot:
+			left.damage *= 2
+			right.damage *= 2
+			left.id = 4
+			right.id = 4
+		add_sibling(left)
+		add_sibling(right)
 
 func hit(damage):
 	if iframes >= IFRAMES:
@@ -65,7 +101,7 @@ func hit(damage):
 			print("dying")
 
 func _on_death_timer_timeout():
-	get_tree().reload_current_scene() # Replace with function body.
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn") # Replace with function body.
 
 
 func _on_health_timer_timeout():
