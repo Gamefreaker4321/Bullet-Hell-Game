@@ -10,9 +10,9 @@ extends Node
 @onready var player =$"../Player"
 
 var score = Vector2(0,0)
-
-
-var wave = 4
+var base_spd = 40
+var cycle = false
+var wave = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -52,7 +52,6 @@ func spawn():
 
 	
 		2:
-			prompt.set_frame_and_progress(2,0)
 			match die:
 				0: spawner_top.spawn(3, "follow", 200, 0)
 				1: spawner_left.spawn(2, "follow", 0, 200)
@@ -69,7 +68,8 @@ func spawn():
 	
 		4:
 			if get_tree().get_nodes_in_group("Boss").size() < 1:
-				spawner_top.spawn(1, "boss", 0, 0, 100)
+				spawner_top.spawn(1, "boss", 0, 0, 5000)
+				cycle = true
 	
 		5:
 			match die:
@@ -97,8 +97,52 @@ func spawn():
 			if get_tree().get_nodes_in_group("Boss").size() < 1:
 				spawner_top.spawn(1, "boss", 0, 0, 10000)
 
+
+#var shotgun = false
+#var turbo = false
+#var speed_boost = false
+#var penetrate = true
+#var power_shot = false
+
 func _on_timer_timeout():
-
-	if get_tree().get_nodes_in_group("Enemy").size() < 15:
-		spawn() # Replace with function body.
-
+	if wave != 7 && (score.x >= 200 || score.y >= 200 || (wave == 4 && get_tree().get_nodes_in_group("Boss").size() < 1 && cycle == true)):
+		print(score)
+		print(wave)
+		if score.x >= 200: 
+			match wave:
+				1: 
+					player.scale = Vector2(-1,-1)
+				2:
+					player.modulate.a = 0.5
+				3:
+					player.power_shot = true
+				4:
+					player.health = 100
+					player.health_bar.value = 100
+				5:
+					player.cone = true
+				6:
+					player.health = 50
+					player.health_bar.value = 50
+		else: if score.y >= 200: 
+			match wave:
+				1: 
+					player.speed_boost = true
+				2:
+					player.turbo = true
+				3:
+					player.penetrate = true
+				4:
+					player.health = 50
+					player.health_bar.value = 50
+				5:
+					player.shotgun = true
+				6:
+					player.spin = true
+		wave += 1
+		score = Vector2.ZERO
+		prompt.set_frame_and_progress(wave-1,0)
+	else:
+		if get_tree().get_nodes_in_group("Enemy").size() < 15:
+			spawn() # Replace with function body.
+			
