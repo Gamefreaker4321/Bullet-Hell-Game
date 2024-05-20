@@ -11,6 +11,7 @@ func _ready():
 	animated_sprite.animation = sprite_dict[id]
 	
 func destroy():
+	
 	queue_free()
 
 func _physics_process(_delta):

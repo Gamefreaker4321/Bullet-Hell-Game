@@ -62,6 +62,7 @@ script = ExtResource("1_7kgot")
 script = ExtResource("2_fa1bj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/CharacterBody2D"]
+z_index = 4
 sprite_frames = SubResource("SpriteFrames_em7tw")
 autoplay = "default"
 

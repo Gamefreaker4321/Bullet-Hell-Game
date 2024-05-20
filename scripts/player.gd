@@ -5,9 +5,9 @@ class_name Player
 const COOLDOWN = 14
 const IFRAMES = 10
 
-var shotgun = true
-var turbo = true
-var speed_boost = true
+var shotgun = false
+var turbo = false
+var speed_boost = false
 var penetrate = true
 var power_shot = false
 
@@ -23,7 +23,6 @@ var last_direction = Vector2.RIGHT
 @onready var health_bar = $HealthBar
 @onready var health_timer = $HealthTimer
 @export var projectile : PackedScene
-
 
 func _ready():
 	health_bar.visible = false

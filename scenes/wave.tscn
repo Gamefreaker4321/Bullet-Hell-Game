@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd5fdtrj4kg0f"]
+
+[ext_resource type="Texture2D" uid="uid://ct60wyq8lhdll" path="res://assets/HUD/waveblock.png" id="1_jtx83"]
+
+[node name="Wave" type="AnimatableBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jtx83")
