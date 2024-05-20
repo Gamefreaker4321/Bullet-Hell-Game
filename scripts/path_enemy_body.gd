@@ -11,6 +11,7 @@ func shoot():
 	var inst = projectile.instantiate()
 	inst.position = global_position
 	inst.look_at(player.position)
+	inst.parent = self
 	inst.target = player
 	inst.id = "fire"
 	get_tree().root.add_child(inst)

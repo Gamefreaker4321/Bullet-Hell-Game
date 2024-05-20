@@ -40,7 +40,7 @@ func _physics_process(delta):
 func on_body_entered(body):
 	if body is Player:
 		player = body as Player
-		player.hit(20)
+		player.hit(parent.attack)
 		queue_free()
 	if body is TileMap:
 		queue_free()
