@@ -8,3 +8,4 @@ script = ExtResource("2_k7e2c")
 
 [node name="Sprite2D" parent="." index="0"]
 autoplay = "pumpkin"
+frame_progress = 0.247941

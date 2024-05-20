@@ -233,7 +233,7 @@ position = Vector2(-376, 0)
 position = Vector2(386, 0)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 4.0
 autostart = true
 
 [node name="Pause_Menu" parent="." instance=ExtResource("5_mq50j")]

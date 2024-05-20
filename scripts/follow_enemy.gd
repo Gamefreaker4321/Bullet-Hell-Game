@@ -1,14 +1,13 @@
 extends Enemy
 
 var speed = 50
-var id
-var sprite_dict = {0: "pumpkin", 1: "werewolf", 2: "slime", 3:"goblin"}
+
+var sprite_dict = {0: "pumpkin", 1: "skeleton", 2: "werewolf"}
 var player: Node
 @onready var animated_sprite = $Sprite2D
 @onready var projectile: PackedScene = load("res://scenes/enemy_projectile.tscn")
 func _ready():
-	if !id:
-		id = randi() % 4
+	var id: int = randi() % 3
 	animated_sprite.animation = sprite_dict[id]
 	
 func destroy():
