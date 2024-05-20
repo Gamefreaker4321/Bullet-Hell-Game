@@ -9,11 +9,13 @@ var locked_dir
 var stopped = false
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var projectile: PackedScene = load("res://scenes/enemy_projectile.tscn")
+@onready var audio_player = $AudioStreamPlayer
+@onready var level_theme: AudioStreamPlayer =get_node("/root/Game/Level_Music") 
 func _ready():
-	pass
-	
+	level_theme.stream_paused = true
+	audio_player.play()
 func destroy():
-	#play death animation?
+	level_theme.stream_paused = false
 	queue_free()
 
 func _physics_process(_delta):

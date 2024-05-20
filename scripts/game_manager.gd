@@ -4,7 +4,7 @@ extends Node
 @onready var spawner_bottom = $"../Enemy_Spawner_Bottom"
 @onready var spawner_left = $"../Enemy_Spawner_Left"
 @onready var spawner_right = $"../Enemy_Spawner_Right"
-var wave = 5
+var wave = 4
 var score = 0 
 # Called when the node enters the scene tree for the first time.
 
@@ -44,7 +44,7 @@ func spawn():
 	
 		4:
 			if get_tree().get_nodes_in_group("Boss").size() < 1:
-				spawner_top.spawn(1, "boss", 0, 0, 10000)
+				spawner_top.spawn(1, "boss", 0, 0, 100)
 	
 		5:
 			match die:
