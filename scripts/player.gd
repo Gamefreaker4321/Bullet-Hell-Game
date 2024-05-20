@@ -21,7 +21,6 @@ var last_direction = Vector2.RIGHT
 @onready var death_timer = $DeathTimer
 @onready var sprite = $PlayerSprite
 @onready var health_bar = $HealthBar
-@onready var health_timer = $HealthTimer
 @export var projectile : PackedScene
 @onready var audio_player = $AudioStreamPlayer
 
