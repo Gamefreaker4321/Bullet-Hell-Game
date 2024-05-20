@@ -11,8 +11,9 @@ var targeted = false
 var direction
 var parent
 var target
-
+var id = "default"
 @onready var sprite = $AnimatedSprite2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if delay != 0:
@@ -20,6 +21,7 @@ func _ready():
 		$DelayTimer.start()
 	else:
 		fire = true
+	sprite.animation = id
 	direction = transform.x
 	body_entered.connect(on_body_entered)
 

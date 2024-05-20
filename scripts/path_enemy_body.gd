@@ -12,6 +12,7 @@ func shoot():
 	inst.position = global_position
 	inst.look_at(player.position)
 	inst.target = player
+	inst.id = "fire"
 	get_tree().root.add_child(inst)
 
 func _on_timer_timeout():

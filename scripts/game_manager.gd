@@ -21,14 +21,15 @@ func _process(delta):
 	pass #var enemies = get_tree().get_nodes_in_group("Enemy")
 
 func wave1():
-	if get_tree().get_nodes_in_group("Elite").size() < 3:
-		#spawner_top.spawn(3, "skeleton", 200, 0)
-		spawner_top.spawn(1, "boss", 0, 0)
-	#spawner_left.spawn(2, "follow", 0, 200)
-	#spawner_right.spawn(2, "follow", 0, 200)
-	#spawner_bottom.spawn(3, "follow", 200, 0)
-	#spawner_left.spawn(1, "path", 0, 100, false)
-	#spawner_right.spawn(1, "path", 0, 100, true)
+	if get_tree().get_nodes_in_group("Elite").size() < 1:
+		spawner_bottom.spawn(3, "skeleton", 200, 0, 500)
+	if get_tree().get_nodes_in_group("Boss").size() < 1:
+		spawner_top.spawn(1, "boss", 0, 0, 10000)
+	spawner_left.spawn(2, "follow", 0, 200)
+	spawner_right.spawn(2, "follow", 0, 200)
+	spawner_bottom.spawn(3, "follow", 200, 0)
+	spawner_left.spawn(1, "path", 0, 100)
+	spawner_right.spawn(1, "path", 0, 100, 100, 10, 50, true)
 	
 func wave2():
 	pass

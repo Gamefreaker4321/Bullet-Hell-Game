@@ -1,7 +1,8 @@
 extends Enemy
 
 var speed = 50
-var count = 4
+var count = 6
+var minions = 4
 var player: Node
 var jump = true
 var locked_dir
@@ -37,12 +38,14 @@ func _physics_process(_delta):
 func shoot():
 	jump = true
 	for i in count:
-		# rotate 45 degrees
-		$origin.rotate(0.785398)
+		# rotate 60 degrees
+		$origin.rotate(PI/3)
 		var inst = projectile.instantiate()
 		inst.global_position = $origin/spawn_point.global_position
-		inst.delay = 3
+		inst.delay = 1
 		inst.parent = self
+		inst.target = player
+		inst.id = "slime"
 		add_sibling(inst)
 		
 func jump_attack():
@@ -51,7 +54,6 @@ func jump_attack():
 	locked_dir = position.direction_to(player.position)
 
 func _on_attack_timer_timeout():
-	print("attack")
 	if jump == true:
 		jump_attack()
 	else:
@@ -64,7 +66,7 @@ func _on_animated_sprite_2d_frame_changed():
 		if animated_sprite.frame == 8:
 			animated_sprite.animation = "idle"
 			stopped = false
-			for i in count:
+			for i in minions:
 				# rotate 90 degrees
 				$origin.rotate(PI/2)
 				var inst = Enemy.new_enemy("slime", 50, 5, 100)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdy6224re3lvg"]
+[gd_scene load_steps=8 format=3 uid="uid://cdy6224re3lvg"]
 
 [ext_resource type="Script" path="res://scripts/enemy_projectile.gd" id="1_irawk"]
 [ext_resource type="Texture2D" uid="uid://5tlt0lknerhx" path="res://assets/sprites/candies.png" id="2_mugsm"]
@@ -6,6 +6,14 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_u1i5v"]
 atlas = ExtResource("2_mugsm")
 region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsof6"]
+atlas = ExtResource("2_mugsm")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lqxf"]
+atlas = ExtResource("2_mugsm")
+region = Rect2(32, 16, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r704m"]
 animations = [{
@@ -15,6 +23,22 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsof6")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lqxf")
+}],
+"loop": true,
+"name": &"slime",
 "speed": 5.0
 }]
 
@@ -30,6 +54,8 @@ script = ExtResource("1_irawk")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_r704m")
+animation = &"fire"
+autoplay = "default"
 speed_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

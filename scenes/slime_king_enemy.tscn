@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ccp8yqn6hf6ls"]
+[gd_scene load_steps=23 format=3 uid="uid://csrg62waa476r"]
 
 [ext_resource type="Script" path="res://scripts/slime_king_enemy.gd" id="1_a45vu"]
 [ext_resource type="Texture2D" uid="uid://b5b7ymicpdwti" path="res://assets/sprites/All-In-One/Characters/SlimeKing/Blue/SlimeKingBlue_Attack.png" id="2_oru8q"]
@@ -139,14 +139,15 @@ animations = [{
 }]
 
 [node name="slime_king_enemy" type="CharacterBody2D"]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 9
+collision_mask = 8
+motion_mode = 1
 script = ExtResource("1_a45vu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0wfvm")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Boss"]]
 sprite_frames = SubResource("SpriteFrames_yfs1d")
 animation = &"idle"
 autoplay = "idle"
@@ -158,7 +159,7 @@ autostart = true
 [node name="origin" type="Marker2D" parent="."]
 
 [node name="spawn_point" type="Marker2D" parent="origin"]
-position = Vector2(25, 0)
+position = Vector2(20, 0)
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
