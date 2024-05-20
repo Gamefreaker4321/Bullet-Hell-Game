@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjgs6w8hwwkwj"
+path="res://.godot/imported/Danmaku of Souls -Boss.wav-e61ad218126d6cca92a7c4f5430e0e0f.sample"
+
+[deps]
+
+source_file="res://assets/music/Danmaku of Souls -Boss.wav"
+dest_files=["res://.godot/imported/Danmaku of Souls -Boss.wav-e61ad218126d6cca92a7c4f5430e0e0f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
