@@ -12,6 +12,7 @@ var direction
 var parent
 var target
 var id = "default"
+var attack
 @onready var sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
@@ -21,6 +22,7 @@ func _ready():
 		$DelayTimer.start()
 	else:
 		fire = true
+	attack = parent.attack
 	sprite.animation = id
 	direction = transform.x
 	body_entered.connect(on_body_entered)
@@ -40,7 +42,7 @@ func _physics_process(delta):
 func on_body_entered(body):
 	if body is Player:
 		player = body as Player
-		player.hit(parent.attack)
+		player.hit(attack)
 		queue_free()
 	if body is TileMap:
 		queue_free()
