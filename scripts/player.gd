@@ -11,7 +11,7 @@ var speed_boost = false
 var penetrate = true
 var power_shot = false
 
-var speed = 150  # speed in pixels/sec
+var speed = 120  # speed in pixels/sec
 var health = 100
 var iframes = 0
 var timer = 0

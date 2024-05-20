@@ -69,6 +69,6 @@ func _on_animated_sprite_2d_frame_changed():
 			for i in minions:
 				# rotate 90 degrees
 				$origin.rotate(PI/2)
-				var inst = Enemy.new_enemy("slime", 50, 5, 100)
+				var inst = Enemy.new_enemy("slime", 50, 5, 75)
 				inst.global_position = $origin/spawn_point.global_position
 				add_sibling(inst)

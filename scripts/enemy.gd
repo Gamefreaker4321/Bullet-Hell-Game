@@ -16,7 +16,7 @@ func apply_damage(damage):
 	if health <= 0:
 		destroy()
 
-static func new_enemy(name: String, hp: int, att: int, spd: int = 50) -> Node2D:
+static func new_enemy(name: String, hp: int, att: int, spd: int = 40) -> Node2D:
 	var ret
 	match name:
 		"follow":

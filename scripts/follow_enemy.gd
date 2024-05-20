@@ -1,6 +1,6 @@
 extends Enemy
 
-var speed = 50
+var speed = 35
 var id
 var sprite_dict = {0: "pumpkin", 1: "werewolf", 2: "slime", 3:"goblin"}
 var player: Node
