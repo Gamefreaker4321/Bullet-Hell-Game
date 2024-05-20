@@ -6,14 +6,23 @@ var sprite_dict = {0: "pumpkin", 1: "werewolf", 2: "slime", 3:"goblin"}
 var player: Node
 @onready var animated_sprite = $Sprite2D
 @onready var projectile: PackedScene = load("res://scenes/enemy_projectile.tscn")
+@onready var zones= get_node("/root/Game/Zones")
+
+#signal follow_die
+
 func _ready():
 	if !id:
 		id = randi() % 4
 	animated_sprite.animation = sprite_dict[id]
+	#var dead = Signal(self,"follow_die")
+	#if!(dead.is_connected(on_enemy_death_trigger)):
+	#	self.connect("follow_die",on_enemy_death_trigger)
 
 func destroy():
-	
+	zones.on_enemy_death_trigger(global_position,animated_sprite.animation)
 	queue_free()
+	
+
 
 func _physics_process(_delta):
 	if player == null:

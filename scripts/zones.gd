@@ -43,6 +43,7 @@ var pattern_dia_b #dark purple diamond
 
 
 func _ready():
+	#$"res://scenes/follow_enemy.tscn".connect("follow_die",on_enemy_death_trigger)
 	tiles_next = make_2d_array(map_w,map_h,int(0))
 	#print(tiles_next)
 	#create tile patterns for enemy drops later
@@ -130,21 +131,22 @@ func _drop_zone(position, pattern, offset):
 	tile_map.set_pattern(layer,position+offset,pattern)
 	
 	
-func _on_enemy_death_trigger(enemy):
+func on_enemy_death_trigger(position,id):
+	print("AAAAAAA")
 	#takes enemy, makes calls to any map changes
-	match enemy.alignment:
-		0:
-			_drop_zone(convert_coord(enemy.position), pattern_dia_a, Vector2i(4,4))
-		1:
-			_drop_zone(convert_coord(enemy.position), pattern_dia_b, Vector2i(4,4))
+	if id in(["pumpkin","skeleton"]) :
+		#0:
+			_drop_zone(convert_coord(position+(Vector2(292,148))), pattern_dia_a, Vector2i(-3,-3))
+	else:
+			_drop_zone(convert_coord(position++(Vector2(292,148))), pattern_dia_b, Vector2i(-3,-3))
 
 
 func _on_timer_timeout():
-		#_drop_zone(Vector2i(27,20),pattern_dia_a, Vector2i(4,4))
-		#_get_next_tiles()
-		#_update_tiles()
+		#_drop_zone(Vector2i(map_w,map_h),pattern_dia_a, Vector2i(0,0))
+		_get_next_tiles()
+		_update_tiles()
 	#tile_map.set_cell(layer, Vector2i(0,0), 0, Vector2i(1,0))
-	pass
+	#pass
 func _update_tiles(force=0):
 	for i in map_w: #set the cells, this breaks when called inside the loops that get and prepare the cell data
 		for j in map_h:
@@ -224,7 +226,7 @@ func _map_ranges(sum):
 			return 2
 	elif(sum.x+sum.y>=6):
 		var roll= (rng.randi_range(0,dropoff2))
-		if (sum.x>=-2):
+		if (sum.x<=2):
 			return 2
 		elif roll==0:
 			return 2

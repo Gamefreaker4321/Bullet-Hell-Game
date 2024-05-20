@@ -12,7 +12,7 @@ extends Node
 var score = Vector2(0,0)
 
 
-var wave = 4
+var wave = 1
 
 
 # Called when the node enters the scene tree for the first time.
