@@ -182,7 +182,8 @@ show_percentage = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_0o763")
-volume_db = -13.318
+volume_db = -48.651
+pitch_scale = 1.1
 bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://mp4qa5ed2l2o"]
+[gd_scene load_steps=6 format=3 uid="uid://mp4qa5ed2l2o"]
 
 [ext_resource type="Texture2D" uid="uid://d03ulf34li34i" path="res://assets/sprites/Start.png" id="1_cbqoj"]
 [ext_resource type="Script" path="res://scripts/Start.gd" id="2_37wik"]
 [ext_resource type="Texture2D" uid="uid://cjceiu2rm2whr" path="res://assets/sprites/Quit.png" id="2_yxrf6"]
 [ext_resource type="Script" path="res://scripts/quit.gd" id="4_ccvvk"]
+[ext_resource type="AudioStream" uid="uid://bmmn8eyyeldn0" path="res://assets/music/Danmaku of Souls - Title.wav" id="5_570eq"]
 
 [node name="Control" type="MarginContainer"]
 anchors_preset = 15
@@ -39,6 +40,11 @@ layout_mode = 2
 
 [node name="Iillustration" type="TextureRect" parent="HBoxContainer/CenterContainer"]
 layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_570eq")
+volume_db = -28.0
+autoplay = true
 
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/Start" to="HBoxContainer/VBoxContainer/Start" method="_on_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/Quit" to="HBoxContainer/VBoxContainer/Quit" method="_on_gui_input"]
