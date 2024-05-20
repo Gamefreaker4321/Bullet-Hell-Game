@@ -5,15 +5,15 @@ class_name Player
 const COOLDOWN = 14
 const IFRAMES = 10
 
-
+var spin = false
+var cone = false
 var shotgun = false
 var turbo = false
-
 var speed_boost = false
-var penetrate = true
+var penetrate = false
 var power_shot = false
 
-var speed = 120  # speed in pixels/sec
+var speed = 150  # speed in pixels/sec
 var health = 100
 var iframes = 0
 var timer = 0
@@ -29,7 +29,9 @@ var last_direction = Vector2.RIGHT
 func _ready():
 	health_bar.visible = true
 	
-func _physics_process(_delta):
+func _physics_process(delta):
+	if spin:
+		sprite.rotate(delta)
 	if iframes < IFRAMES:
 		iframes += 1
 	if timer > 0:
@@ -68,12 +70,16 @@ func shoot(direction):
 		inst.damage *= 2
 		inst.id = 4
 	add_sibling(inst)
-	if shotgun:
+	if shotgun || cone:
 		# add 15% spread
 		var left = inst.duplicate()
-		left.rotate(0.26)
 		var right = inst.duplicate()
-		right.rotate(-0.26)
+		if cone:
+			left.rotate(0.26)
+			right.rotate(-0.26)
+		if shotgun:
+			left.position += transform.y * 6
+			right.position -= transform.y * 6
 		if speed_boost:
 			left.speed *= 2
 			right.speed *= 2
