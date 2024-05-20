@@ -8,10 +8,10 @@ const IFRAMES = 10
 var shotgun = true
 var turbo = true
 var speed_boost = false
-var penetrate = false
+var penetrate = true
 var power_shot = false
 
-var speed = 150  # speed in pixels/sec
+var speed = 120  # speed in pixels/sec
 var health = 100
 var iframes = 0
 var timer = 0
@@ -21,13 +21,12 @@ var last_direction = Vector2.RIGHT
 @onready var death_timer = $DeathTimer
 @onready var sprite = $PlayerSprite
 @onready var health_bar = $HealthBar
-@onready var health_timer = $HealthTimer
 @export var projectile : PackedScene
 @onready var audio_player = $AudioStreamPlayer
 
 
 func _ready():
-	health_bar.visible = false
+	health_bar.visible = true
 	
 func _physics_process(_delta):
 	if iframes < IFRAMES:
@@ -95,8 +94,6 @@ func hit(damage):
 		iframes = 0
 		health -= damage
 		health_bar.value = health
-		health_bar.visible = true
-		health_timer.start()
 		if health <= 0 && death_timer.is_stopped():
 			sprite.animation = "death" 
 			death_timer.start()
@@ -104,7 +101,3 @@ func hit(damage):
 
 func _on_death_timer_timeout():
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn") # Replace with function body.
-
-
-func _on_health_timer_timeout():
-	health_bar.visible = false
