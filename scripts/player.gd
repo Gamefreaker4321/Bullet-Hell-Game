@@ -7,8 +7,8 @@ const IFRAMES = 10
 
 var shotgun = true
 var turbo = true
-var speed_boost = true
-var penetrate = true
+var speed_boost = false
+var penetrate = false
 var power_shot = false
 
 var speed = 150  # speed in pixels/sec

@@ -1,6 +1,6 @@
 extends Node2D
 
-func spawn(count: int, type: String, randx: int, randy:int):
+func spawn(count: int, type: String, randx: int, randy:int, flip: bool = false):
 	var spread_x
 	var spread_y
 	if randx != 0:
@@ -20,4 +20,6 @@ func spawn(count: int, type: String, randx: int, randy:int):
 		else:
 			y = randf_range(spread_y[n],spread_y[n+1])
 		enemy.position = position + Vector2(x,y)
+		if flip:
+			enemy.scale.x = -1
 		add_sibling(enemy)
