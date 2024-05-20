@@ -23,6 +23,7 @@ var last_direction = Vector2.RIGHT
 @onready var health_bar = $HealthBar
 @onready var health_timer = $HealthTimer
 @export var projectile : PackedScene
+@onready var audio_player = $AudioStreamPlayer
 
 
 func _ready():
@@ -57,6 +58,7 @@ func shoot(direction):
 	var inst = projectile.instantiate()
 	inst.position = global_position
 	inst.look_at(global_position + direction)
+	audio_player.play()
 	if speed_boost:
 		inst.speed *= 2
 	if penetrate:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://edm6nmqory0u"]
+[gd_scene load_steps=24 format=3 uid="uid://edm6nmqory0u"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kraov"]
 [ext_resource type="Texture2D" uid="uid://c4nvpxwrsuysx" path="res://assets/Graveyard [16x16]/Bonus Character/Ghost_Idle.png" id="2_2j4nn"]
 [ext_resource type="PackedScene" uid="uid://dhuaipyy5p7wb" path="res://scenes/projectile.tscn" id="2_auvf0"]
 [ext_resource type="Texture2D" uid="uid://cdsf7gpij5fmr" path="res://assets/Graveyard [16x16]/Bonus Character/Ghost_Death.png" id="3_ytbu5"]
+[ext_resource type="AudioStream" uid="uid://ccxl0n1b82oql" path="res://assets/music/SFX/plst00.wav" id="5_0o763"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p28x7"]
 atlas = ExtResource("3_ytbu5")
@@ -178,6 +179,11 @@ step = 1.0
 value = 100.0
 rounded = true
 show_percentage = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0o763")
+volume_db = -13.318
+bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
